@@ -132,8 +132,10 @@ bot.onMessage(async (channel, user, message, self) => {
         }
     }
     // check if message is a command started with !COMMAND_NAME (e.g. !gpt) in lower-cased
-    if (message.toLowerCase().startsWith(COMMAND_NAME)) {
-        let text = message.slice(COMMAND_NAME.length);
+   const botTriggerRegex = new RegExp(`\\b${COMMAND_NAME}\\b`, 'i');
+
+        if (botTriggerRegex.test(message.toLowerCase())) {
+        let text = message.replace(botTriggerRegex, '').trim();
 
         if (SEND_USERNAME) {
             text = "Message from user " + user.username + ": " + text
